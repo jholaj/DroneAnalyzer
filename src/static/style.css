@@ -1,0 +1,37 @@
+nav {
+    font-size: large;
+}
+
+#navbar-brand {
+    font-size: 5rem;
+}
+
+.form-container {
+    max-width: 400px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.form-container label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.form-container input[type="file"] {
+    margin-bottom: 10px;
+}
+
+.form-container button {
+    padding: 10px 20px;
+    background-color: #1e6091;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form-container button:hover {
+    background-color: #003670;
+}
