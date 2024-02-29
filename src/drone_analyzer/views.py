@@ -3,6 +3,11 @@ import csv
 import io
 import json
 
+##################################
+##### AUTHOR: JAROSLAV HOLAJ #####
+#####   TIME SPENT: 3h 30m   #####
+##################################
+
 # Create your views here.
 def homepage_view(request):
     if request.method == "POST":
@@ -12,10 +17,31 @@ def homepage_view(request):
         telemetry_data = load_csv(telemetry_form)
         status_data = load_csv(status_form)
         ########## what to measure ###########
-        ### latency
+        ## add map
+        ### time
+        ### latitude
+        ### longtitude
+
+        ## basic info
+        ### altitude (x - time, y - altitude) + geo_altitude
+        ### height
+        ### pressure
+        ### battery voltage
         ### LTE cells switching
-        ### intervals between receiving next data on server
+
+        ## accuracy
+        ### horizontal accuracy (x - time, y - horizontal accuracy)
+        ### vertical accuracy (x - time, y - vertical accuracy)
+        ### speed accuracy
         ### 
+
+        ## signal strength
+        ### latency
+        ### intervals between receiving next data on server
+        ### strength of signal (x - time, y - RSRP)
+        ### number of satellites (x - time, y - number of satellites)
+        ### quality of signal (x - time, y - RSRQ)
+        ### noise ratio (x - time, y - SNR)
 
 
         context = {

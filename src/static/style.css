@@ -36,12 +36,12 @@ nav {
     background-color: #003670;
 }
 
-#telemetryBtn, #statusBtn {
+#basicBtn, #accuracyBtn, #signalBtn, #mapBtn {
     background-color: #1e6091;
     border-color: #1e6091;
 }
 
-#telemetryBtn.active, #statusBtn.active {
+#basicBtn.active, #accuracyBtn.active, #signalBtn.active, #mapBtn.active {
     background-color: #003670;
     border-color: #003670;
 }

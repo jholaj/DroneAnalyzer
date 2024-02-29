@@ -32,20 +32,24 @@
                         <label for="status_data">Status data:</label>
                         <input type="file" name="status_data" id="status_data"><br>
                     </div>
-                    <button type="submit" onclick="showGraph()">Load data</button>
+                    <button type="submit" onclick="showGraph(event)">Load data</button>
                 </form>
             </div>
         </div>
         <div class="col-md-6" id="graphSection">
             <div class="text-center mb-3">
                 <div class="btn-group" role="group" aria-label="Data switch">
-                    <button type="button" id="telemetryBtn" class="btn btn-primary" onclick="showTelemetry()">Telemetry Data</button>
-                    <button type="button" id="statusBtn" class="btn btn-primary" onclick="showStatus()">Status Data</button>
+                    <button type="button" id="basicBtn" class="btn btn-primary graphBtn" onclick="switchGraph('telemetry')">Basic Info</button>
+                    <button type="button" id="accuracyBtn" class="btn btn-primary graphBtn" onclick="switchGraph('status')">Accuracy Data</button>
+                    <button type="button" id="signalBtn" class="btn btn-primary graphBtn" onclick="switchGraph('signal')">Signal Strength</button>
+                    <button type="button" id="mapBtn" class="btn btn-primary graphBtn" onclick="switchGraph('map')">Map</button>
                 </div>
             </div>
             <div class="graph-content">
-                <div id="telemetryGraph" style="height: 300px; border: 1px solid #ccc;"></div>
-                <div id="statusGraph" style="height: 300px; border: 1px solid #ccc; display: none;"></div>
+                <div id="basicGraph" class="graph" style="height: 300px; border: 1px solid #ccc;"></div>
+                <div id="accuracyGraph" class="graph" style="height: 300px; border: 1px solid #ccc; display: none;"></div>
+                <div id="signalGraph" class="graph" style="height: 300px; border: 1px solid #ccc; display: none;"></div>
+                <div id="mapGraph" class="graph" style="height: 300px; border: 1px solid #ccc; display: none;"></div>
             </div>
         </div>
     </div>
