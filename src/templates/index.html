@@ -20,19 +20,36 @@
 </nav>
 
 <div class="container mt-4">
-    <h4>Load CSV files</h4>
-    <div class="form-container">
-    <form method="POST" enctype="multipart/form-data"> 
-        {% csrf_token %}
-        <div>
-            <label for="telemetry_data">Telemetry data:</label>
-            <input type="file" name="telemetry_data" id="telemetry_data"><br>
-            <label for="status_data">Status data:</label>
-            <input type="file" name="status_data" id="status_data"><br>
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Load CSV files</h4>
+            <div class="form-container">
+                <form method="POST" enctype="multipart/form-data"> 
+                    {% csrf_token %}
+                    <div>
+                        <label for="telemetry_data">Telemetry data:</label>
+                        <input type="file" name="telemetry_data" id="telemetry_data"><br>
+                        <label for="status_data">Status data:</label>
+                        <input type="file" name="status_data" id="status_data"><br>
+                    </div>
+                    <button type="submit" onclick="showGraph()">Load data</button>
+                </form>
+            </div>
         </div>
-        <button type="submit">Load data</button>
-    </form>
+        <div class="col-md-6" id="graphSection">
+            <div class="text-center mb-3">
+                <div class="btn-group" role="group" aria-label="Data switch">
+                    <button type="button" id="telemetryBtn" class="btn btn-primary" onclick="showTelemetry()">Telemetry Data</button>
+                    <button type="button" id="statusBtn" class="btn btn-primary" onclick="showStatus()">Status Data</button>
+                </div>
+            </div>
+            <div class="graph-content">
+                <div id="telemetryGraph" style="height: 300px; border: 1px solid #ccc;"></div>
+                <div id="statusGraph" style="height: 300px; border: 1px solid #ccc; display: none;"></div>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
+<script type="text/javascript" src="static/graph.js"></script>
 </body>
 </html>

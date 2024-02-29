@@ -35,3 +35,17 @@ nav {
 .form-container button:hover {
     background-color: #003670;
 }
+
+#telemetryBtn, #statusBtn {
+    background-color: #1e6091;
+    border-color: #1e6091;
+}
+
+#telemetryBtn.active, #statusBtn.active {
+    background-color: #003670;
+    border-color: #003670;
+}
+
+#graphSection {
+    display:none;
+}
