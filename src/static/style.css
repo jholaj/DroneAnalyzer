@@ -49,3 +49,35 @@ nav {
 #graphSection {
     display:none;
 }
+
+.current-date-bubble {
+    position: absolute;
+    top: 55.5%;
+    left: 67%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+/* important for rewriting javascript */
+@media only screen and (max-width: 955px) {
+    .end-label {
+        position: relative !important;
+        right: -50% !important;
+    }
+}
+
+@media only screen and (max-width: 766px) {
+    .current-date-bubble {
+        top: 92.5% !important;
+        left: 41% !important;
+    }
+}
+
+@media only screen and (max-width: 572px) {
+    .end-label {
+        position: relative !important;
+        right: -43% !important;
+    }
+}
