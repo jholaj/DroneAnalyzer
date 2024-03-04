@@ -4,6 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 import csv
 import io
 import json
+from datetime import datetime
 ##################################
 ##### AUTHOR: JAROSLAV HOLAJ #####
 #####   TIME SPENT: 8h 40m   #####
@@ -36,7 +37,27 @@ def homepage_view(request):
             ### number of satellites (x - time, y - number of satellites)
             ### quality of signal (x - time, y - RSRQ)
             ### noise ratio (x - time, y - SNR)
-            signal_strength_data = [{'latency': "", 'intervals': "", 'signal_strength': entry['rsrp'], 'num_satellites':entry['satellites'], 'signal_quality': entry['rsrq'], 'noise_ratio': entry['snr'], 'time': entry['time']} for entry in status_data]
+            signal_strength_data = []
+            for i in range(1, len(status_data)):
+                current_entry = status_data[i]
+                previous_entry = status_data[i - 1]
+
+                current_time = datetime.strptime(current_entry['time_received'].split('+')[0], '%Y-%m-%d %H:%M:%S.%f')
+                previous_time = datetime.strptime(previous_entry['time_received'].split('+')[0], '%Y-%m-%d %H:%M:%S.%f')
+                start_time = datetime.strptime(status_data[0]['time_received'].split('+')[0], '%Y-%m-%d %H:%M:%S.%f')
+
+                latency = (current_time - previous_time).total_seconds()
+                interval = (current_time - start_time).total_seconds()
+
+                signal_strength_data.append({
+                    'latency': latency,
+                    'interval': interval,
+                    'signal_strength': current_entry['rsrp'],
+                    'num_satellites': current_entry['satellites'],
+                    'signal_quality': current_entry['rsrq'],
+                    'noise_ratio': current_entry['snr'],
+                    'time': current_entry['time']
+                })
             print("SIGNAL DATA LOADED...")
             ######## ACCURACY ##########
             ## accuracy
@@ -57,7 +78,8 @@ def homepage_view(request):
             basic_data = [{''}]
             return JsonResponse(
                     {'longitude_latitude_data': longitude_latitude_data,
-                     'accuracy_data':accuracy_data})
+                     'accuracy_data':accuracy_data,
+                     'signal_strength_data':signal_strength_data})
         except Exception as e:
             return JsonResponse({'error': f"Error processing data: {str(e)}"}, status=500)
 

@@ -46,7 +46,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             ];
 
-            // Vytvoření grafu
             let accuracyGraphCanvas = document.getElementById('accuracyGraph').querySelector('canvas');
             if (!accuracyGraphCanvas) {
                 accuracyGraphCanvas = document.createElement('canvas');
