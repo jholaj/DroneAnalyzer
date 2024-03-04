@@ -7,7 +7,7 @@ import json
 from datetime import datetime
 ##################################
 ##### AUTHOR: JAROSLAV HOLAJ #####
-#####   TIME SPENT: 8h 40m   #####
+#####   TIME SPENT: 9h 30m   #####
 ##################################
 
 # Create your views here.
