@@ -1,3 +1,5 @@
+//TODO: Solve changing tabs
+
 function showGraph(event){
     // default
     document.getElementById('basicBtn').classList.add('active');

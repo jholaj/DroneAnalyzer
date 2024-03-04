@@ -31,7 +31,7 @@ function createMap(data){
                 maxZoom: 20
             })
         });
-
+        
         const features = data.map(entry => {
             const point = ol.proj.fromLonLat([entry.longitude, entry.latitude]);
             const feature = new ol.Feature({
@@ -40,11 +40,11 @@ function createMap(data){
             });
             return feature;
         });
-
+        
         const source = new ol.source.Vector({
             features: features
         });
-
+        
         const layer = new ol.layer.Vector({
             source: source,
             style: function(feature) {
@@ -66,15 +66,16 @@ function createMap(data){
                 }
             }
         });
-
+        
         map.addLayer(layer);
-
+        
         let selectedFeature = null;
 
 
         // init slider container
         const timeSliderContainer = document.createElement('div');
-        timeSliderContainer.className = 'slider-container';
+        timeSliderContainer.id = 'slider-container';
+        timeSliderContainer.className = 'graph';
         // init slider
         const timeSlider = document.createElement('input');
         timeSlider.type = 'range';
@@ -82,11 +83,11 @@ function createMap(data){
         timeSlider.max = data.length - 1;
         timeSlider.step = 1;
         timeSlider.value = 0;
-        timeSlider.className = 'time-slider';
+        timeSlider.id = 'time-slider';
         
         // start time
         const startLabel = document.createElement('span');
-        startLabel.className = 'start-label';
+        startLabel.id = 'start-label';
         startLabel.textContent = new Date(data[0].time).toLocaleString();
         
         // end time
@@ -96,7 +97,8 @@ function createMap(data){
         
         // init labels container
         const timeLabelsContainer = document.createElement('div');
-        timeLabelsContainer.className = 'label-container';
+        timeLabelsContainer.id = 'label-container';
+        timeLabelsContainer.className = 'graph';
         
         // appending to containers
         timeSliderContainer.appendChild(timeSlider);

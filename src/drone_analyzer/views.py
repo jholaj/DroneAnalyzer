@@ -4,10 +4,10 @@ from django.views.decorators.csrf import csrf_exempt
 import csv
 import io
 import json
-
+from datetime import datetime
 ##################################
 ##### AUTHOR: JAROSLAV HOLAJ #####
-#####   TIME SPENT: 7h 30m   #####
+#####   TIME SPENT: 8h 40m   #####
 ##################################
 
 # Create your views here.
@@ -19,44 +19,50 @@ def homepage_view(request):
 
         if not any([telemetry_form, status_form]):
             return JsonResponse({'error': "Please upload both telemetry and status data."}, status=400)
-
         try:
             telemetry_data = load_csv(telemetry_form)
             status_data = load_csv(status_form)
-
+            ######### BASIC MAP INFO ##############
+            ### time        
+            ### latitude    
+            ### longtitude  
             longitude_latitude_data = [{'longitude': entry['longitude'], 'latitude': entry['latitude'], 'time': entry['time']} for entry in telemetry_data]
-            
-            return JsonResponse({'longitude_latitude_data': longitude_latitude_data})
+            print("MAP DATA LOADED...")
+            ######## SIGNAL STRENGTH ##############
+            # calc latency and intervals
+            ## signal strength
+            ### latency
+            ### intervals between receiving next data on server
+            ### strength of signal (x - time, y - RSRP)
+            ### number of satellites (x - time, y - number of satellites)
+            ### quality of signal (x - time, y - RSRQ)
+            ### noise ratio (x - time, y - SNR)
+            signal_strength_data = [{'latency': "", 'intervals': "", 'signal_strength': entry['rsrp'], 'num_satellites':entry['satellites'], 'signal_quality': entry['rsrq'], 'noise_ratio': entry['snr'], 'time': entry['time']} for entry in status_data]
+            print("SIGNAL DATA LOADED...")
+            ######## ACCURACY ##########
+            ## accuracy
+            ### horizontal accuracy (x - time, y - horizontal accuracy)
+            ### vertical accuracy (x - time, y - vertical accuracy)
+            ### speed accuracy
+            ### time clipped to HH:MM:SS
+            accuracy_data = [{'horizontal_accuracy': entry['horizontal_accuracy'], 'vertical_accuracy': entry['vertical_accuracy'], 'speed_accuracy':entry['speed_accuracy'], 'time': datetime.strptime(entry['time'].split('+')[0], '%Y-%m-%d %H:%M:%S').strftime('%H:%M:%S')} for entry in telemetry_data]
+            print("ACCURACY DATA LOADED...")
+            ######## BASIC INFO #########
+            # todo
+            ### altitude (x - time, y - altitude) + geo_altitude
+            ### velocity (x,y,z)
+            ### height
+            ### pressure
+            ### battery voltage
+            ### LTE cells switching
+            basic_data = [{''}]
+            return JsonResponse(
+                    {'longitude_latitude_data': longitude_latitude_data,
+                     'accuracy_data':accuracy_data})
         except Exception as e:
             return JsonResponse({'error': f"Error processing data: {str(e)}"}, status=500)
 
     return render(request, "index.html", {})
-        ########## what to measure ###########
-        ## add map
-        ### time
-        ### latitude
-        ### longtitude
-
-        ## basic info
-        ### altitude (x - time, y - altitude) + geo_altitude
-        ### height
-        ### pressure
-        ### battery voltage
-        ### LTE cells switching
-
-        ## accuracy
-        ### horizontal accuracy (x - time, y - horizontal accuracy)
-        ### vertical accuracy (x - time, y - vertical accuracy)
-        ### speed accuracy
-        ### 
-
-        ## signal strength
-        ### latency
-        ### intervals between receiving next data on server
-        ### strength of signal (x - time, y - RSRP)
-        ### number of satellites (x - time, y - number of satellites)
-        ### quality of signal (x - time, y - RSRQ)
-        ### noise ratio (x - time, y - SNR)
 
     if request.method == "GET":
         context = {
