@@ -1,3 +1,4 @@
+//TODO: Solve changing tabs (going back to this tab)
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('mapBtn').addEventListener('click', function() {
         fetch('homepage', {

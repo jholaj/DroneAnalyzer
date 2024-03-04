@@ -7,7 +7,14 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             console.log(data);
-            const labels = data.accuracy_data.map(item => item.time);
+            const labels = data.accuracy_data.map(item => {
+                const date = new Date(item.time);
+                // leading zero
+                const hours = String(date.getHours()).padStart(2, '0');
+                const minutes = String(date.getMinutes()).padStart(2, '0');
+                const seconds = String(date.getSeconds()).padStart(2, '0');
+                return `${hours}:${minutes}:${seconds}`;
+            });            
             const horizontalAccuracyData = data.accuracy_data.map(item => item.horizontal_accuracy);
             const verticalAccuracyData = data.accuracy_data.map(item => item.vertical_accuracy);
             const speedAccuracyData = data.accuracy_data.map(item => item.speed_accuracy);
@@ -17,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log(verticalAccuracyData);
             console.log(speedAccuracyData);
 
-            // Konfigurace datové sady pro graf
+            // graph config
             const dataset = [
                 {
                     label: 'Horizontal Accuracy',

@@ -4,7 +4,6 @@ from django.views.decorators.csrf import csrf_exempt
 import csv
 import io
 import json
-from datetime import datetime
 ##################################
 ##### AUTHOR: JAROSLAV HOLAJ #####
 #####   TIME SPENT: 8h 40m   #####
@@ -45,7 +44,7 @@ def homepage_view(request):
             ### vertical accuracy (x - time, y - vertical accuracy)
             ### speed accuracy
             ### time clipped to HH:MM:SS
-            accuracy_data = [{'horizontal_accuracy': entry['horizontal_accuracy'], 'vertical_accuracy': entry['vertical_accuracy'], 'speed_accuracy':entry['speed_accuracy'], 'time': datetime.strptime(entry['time'].split('+')[0], '%Y-%m-%d %H:%M:%S').strftime('%H:%M:%S')} for entry in telemetry_data]
+            accuracy_data = [{'horizontal_accuracy': entry['horizontal_accuracy'], 'vertical_accuracy': entry['vertical_accuracy'], 'speed_accuracy':entry['speed_accuracy'], 'time': entry['time']} for entry in telemetry_data]
             print("ACCURACY DATA LOADED...")
             ######## BASIC INFO #########
             # todo
