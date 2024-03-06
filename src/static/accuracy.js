@@ -27,19 +27,19 @@ document.addEventListener('DOMContentLoaded', function() {
             // graph config
             const dataset = [
                 {
-                    label: 'Horizontal Accuracy',
+                    label: 'Horizontal Accuracy (m)',
                     data: horizontalAccuracyData,
                     borderColor: 'rgba(255, 99, 132, 1)',
                     borderWidth: 1
                 },
                 {
-                    label: 'Vertical Accuracy',
+                    label: 'Vertical Accuracy (m)',
                     data: verticalAccuracyData,
                     borderColor: 'rgba(54, 162, 235, 1)',
                     borderWidth: 1
                 },
                 {
-                    label: 'Speed Accuracy',
+                    label: 'Speed Accuracy (m)',
                     data: speedAccuracyData,
                     borderColor: 'rgba(255, 206, 86, 1)',
                     borderWidth: 1
@@ -66,8 +66,22 @@ document.addEventListener('DOMContentLoaded', function() {
                         y: {
                             beginAtZero: true
                         }
-                    }
+                    },
+                    plugins: {
+                        zoom: {
+                            pan: {
+                                enabled: true,
+                                modifierKey: 'ctrl',
+                            },
+                            zoom: {
+                                drag: {
+                                enabled: true
+                                },
+                                mode: 'x',
+                            },
+                        }
                 }
+                },
             });
         })
         .catch(error => {

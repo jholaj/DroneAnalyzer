@@ -7,7 +7,7 @@ import json
 from datetime import datetime
 ##################################
 ##### AUTHOR: JAROSLAV HOLAJ #####
-#####   TIME SPENT: 9h 30m   #####
+#####   TIME SPENT: 13h 00m  #####
 ##################################
 
 # Create your views here.
@@ -26,10 +26,14 @@ def homepage_view(request):
             ### time        
             ### latitude    
             ### longtitude  
-            longitude_latitude_data = [{'longitude': entry['longitude'], 'latitude': entry['latitude'], 'time': entry['time']} for entry in telemetry_data]
+            longitude_latitude_data = [{'longitude': entry['longitude'],
+                'latitude': entry['latitude'],
+                'time': entry['time']} 
+                for entry in telemetry_data]
+
+            # show some basic info?
             print("MAP DATA LOADED...")
             ######## SIGNAL STRENGTH ##############
-            # calc latency and intervals
             ## signal strength
             ### latency
             ### intervals between receiving next data on server
@@ -37,6 +41,8 @@ def homepage_view(request):
             ### number of satellites (x - time, y - number of satellites)
             ### quality of signal (x - time, y - RSRQ)
             ### noise ratio (x - time, y - SNR)
+            ### -------------------
+            ### add lte cell id?
             signal_strength_data = []
             for i in range(1, len(status_data)):
                 current_entry = status_data[i]
@@ -64,22 +70,35 @@ def homepage_view(request):
             ### horizontal accuracy (x - time, y - horizontal accuracy)
             ### vertical accuracy (x - time, y - vertical accuracy)
             ### speed accuracy
-            ### time clipped to HH:MM:SS
-            accuracy_data = [{'horizontal_accuracy': entry['horizontal_accuracy'], 'vertical_accuracy': entry['vertical_accuracy'], 'speed_accuracy':entry['speed_accuracy'], 'time': entry['time']} for entry in telemetry_data]
+            accuracy_data = [{
+                'horizontal_accuracy': entry['horizontal_accuracy'],
+                'vertical_accuracy': entry['vertical_accuracy'],
+                'speed_accuracy':entry['speed_accuracy'],
+                'time': entry['time']} 
+                for entry in telemetry_data]
+
             print("ACCURACY DATA LOADED...")
             ######## BASIC INFO #########
-            # todo
-            ### altitude (x - time, y - altitude) + geo_altitude
+            ### altitude (x - time, y - altitude) + geo_altitude, height
             ### velocity (x,y,z)
-            ### height
             ### pressure
             ### battery voltage
-            ### LTE cells switching
-            basic_data = [{''}]
+            basic_data = [{
+                'time': entry['time'],
+                'altitude': entry['altitude'],
+                'geo_altitude': entry['geo_altitude'],
+                'velocity_x': entry['velocity_x'],
+                'velocity_y': entry['velocity_y'],
+                'velocity_z': entry['velocity_z'],
+                'height': entry['height'],
+                'pressure': entry['pressure'],
+            } for entry in telemetry_data] 
+
             return JsonResponse(
                     {'longitude_latitude_data': longitude_latitude_data,
                      'accuracy_data':accuracy_data,
-                     'signal_strength_data':signal_strength_data})
+                     'signal_strength_data':signal_strength_data,
+                     'basic_data':basic_data})
         except Exception as e:
             return JsonResponse({'error': f"Error processing data: {str(e)}"}, status=500)
 
