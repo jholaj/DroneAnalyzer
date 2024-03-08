@@ -94,11 +94,18 @@ def homepage_view(request):
                 'pressure': entry['pressure'],
             } for entry in telemetry_data] 
 
+            battery_data = [{
+                'time': entry['time'],
+                'battery': entry['battery'],
+                'charging': entry['charging']
+            } for entry in status_data]
+
             return JsonResponse(
                     {'longitude_latitude_data': longitude_latitude_data,
                      'accuracy_data':accuracy_data,
                      'signal_strength_data':signal_strength_data,
-                     'basic_data':basic_data})
+                     'basic_data':basic_data,
+                     'battery_data':battery_data})
         except Exception as e:
             return JsonResponse({'error': f"Error processing data: {str(e)}"}, status=500)
 
