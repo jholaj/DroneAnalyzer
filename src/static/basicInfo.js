@@ -59,7 +59,17 @@ document.addEventListener('DOMContentLoaded', function() {
             if (graphContentElements.length > 0) {
                 const firstGraphContent = graphContentElements[0];
                 firstGraphContent.parentNode.insertBefore(selectList, firstGraphContent);
-            }    
+            }   
+            
+            // hide selector in other tabs
+            const btnGroup = document.querySelector('.btn-group');
+            btnGroup.addEventListener('click', function(event) {
+                if (event.target.classList.contains('graphBtn') && event.target.id !== 'basicBtn') {
+                    selectList.style.display = 'none';
+                } else {
+                    selectList.style.display = 'block';
+                }
+            });
 
             selectList.addEventListener('change', function() {
                 const selectedOption = this.value;
