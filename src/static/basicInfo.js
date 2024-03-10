@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function() {
             
             let selectedData = [];
             let selectedGraphDataLabels = [];
-            let myChart;
 
             // Selector
             const selectList = document.createElement('select');
@@ -108,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     'Battery': 'rgba(30, 240, 240, 1)' // Azure
                 };
 
-                myChart.data.datasets = selectedData.map((data, index) => ({
+                chartInstances['basicGraph'].data.datasets = selectedData.map((data, index) => ({
                     label: selectedGraphDataLabels[index],
                     data: data,
                     borderColor: labelColors[selectedGraphDataLabels[index]],
@@ -116,8 +115,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }));
                 
                 // which label will be selected (battery is in status)
-                myChart.data.labels = selectedOption === 'battery' ? batteryLabels : labels;
-                myChart.update();
+                chartInstances['basicGraph'].data.labels = selectedOption === 'battery' ? batteryLabels : labels;
+                chartInstances['basicGraph'].update();
             });
 
             let basicGraphCanvas = document.getElementById('basicGraph').querySelector('canvas');
@@ -132,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const ctx = basicGraphCanvas.getContext('2d');
 
-            myChart = new Chart(ctx, {
+            chartInstances['basicGraph'] = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: labels,

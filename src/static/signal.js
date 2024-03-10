@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const ctx = document.getElementById('signalGraph').querySelector('canvas').getContext('2d');
 
-            const myChart = new Chart(ctx, {
+            chartInstances['signalGraph'] = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: labels,

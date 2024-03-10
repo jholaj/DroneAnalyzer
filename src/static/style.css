@@ -60,6 +60,20 @@ nav {
     border-radius: 5px;
 }
 
+.resetZoomBtn {
+    padding: 7px;
+    margin-top: 5px;
+    background-color: #e3ecf8;
+    color: #4182d0;
+    font-size: revert;
+    border-width: 0;
+}
+
+.resetZoomBtn:hover{
+    color: #426189;
+    background-color: #a5c9f9;
+}
+
 /* important for rewriting javascript */
 @media only screen and (max-width: 955px) {
     .end-label {

@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const ctx = document.getElementById('accuracyGraph').querySelector('canvas').getContext('2d');
 
 
-            const myChart = new Chart(ctx, {
+            chartInstances['accuracyGraph'] = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: labels,
