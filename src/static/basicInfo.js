@@ -37,14 +37,6 @@ document.addEventListener('DOMContentLoaded', function() {
             selectList.style.transform = 'translateX(72.5%)';
             selectList.style.marginBottom = '10px';
             
-            // Change listener
-            selectList.addEventListener('change', function() {
-                const selectedDataset = this.value;
-                const selectedData = data.basic_data.map(item => item[selectedDataset]);
-                myChart.data.datasets[0].data = selectedData;
-                myChart.update();
-            });
-            
             // Selector options
             const options = ['Altitude', 'Velocity', 'Pressure', 'Battery'];
             options.forEach(option => {
