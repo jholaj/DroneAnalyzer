@@ -1,4 +1,5 @@
-//TODO: Solve changing tabs (going back to this tab)
+let mapCreated = false;
+
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('mapBtn').addEventListener('click', function() {
         fetch('homepage', {
@@ -8,6 +9,10 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             createMap(data.longitude_latitude_data);
+            if(mapCreated){
+                deleteNestedViewport();
+            }
+            mapCreated = true;
         })
         .catch(error => {
             console.error('Error when loading data:', error);
@@ -71,7 +76,6 @@ function createMap(data){
         map.addLayer(layer);
         
         let selectedFeature = null;
-
 
         // init slider container
         const timeSliderContainer = document.createElement('div');
@@ -145,5 +149,20 @@ function createMap(data){
             selectedFeature = features[index];
             layer.changed(); // updating layers
         });
+    }
+}
+
+// When changing tabs (for example Basic -> Map -> Signal Strength -> Map)[back to Map]
+// OL would create new viewport 
+// If trying to prevent it with if mapCreated -> don't call createMap
+// Only one map would be created, but not centered (don't know why?)
+// -----------------------------------------------
+// This way just deletes first viewport
+// So the old one remains
+function deleteNestedViewport(){
+    const mapGraph = document.getElementById('mapGraph');
+    const firstViewport = mapGraph.querySelector('.ol-viewport');
+    if (firstViewport) {
+        firstViewport.parentNode.removeChild(firstViewport);
     }
 }
