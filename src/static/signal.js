@@ -6,15 +6,16 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
             const labels = data.signal_strength_data.map(item => {
                 const date = new Date(item.time);
+                // Nastavit časovou zónu na UTC
+                date.setTime(date.getTime() + date.getTimezoneOffset() * 60 * 1000); // Přepočítá na lokální čas
                 // leading zero
-                const hours = String(date.getHours()).padStart(2, '0');
-                const minutes = String(date.getMinutes()).padStart(2, '0');
-                const seconds = String(date.getSeconds()).padStart(2, '0');
+                const hours = date.getHours().toString().padStart(2, '0');
+                const minutes = date.getMinutes().toString().padStart(2, '0');
+                const seconds = date.getSeconds().toString().padStart(2, '0');
                 return `${hours}:${minutes}:${seconds}`;
-            });            
+            });      
             const latencyData = data.signal_strength_data.map(item => item.latency * 100);
             const intervalData = data.signal_strength_data.map(item => item.interval * 100);
             const signalStrengthData = data.signal_strength_data.map(item => item.signal_strength);

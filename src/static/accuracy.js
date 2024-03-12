@@ -6,23 +6,19 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
             const labels = data.accuracy_data.map(item => {
                 const date = new Date(item.time);
+                // UTC
+                date.setTime(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
                 // leading zero
-                const hours = String(date.getHours()).padStart(2, '0');
-                const minutes = String(date.getMinutes()).padStart(2, '0');
-                const seconds = String(date.getSeconds()).padStart(2, '0');
+                const hours = date.getHours().toString().padStart(2, '0');
+                const minutes = date.getMinutes().toString().padStart(2, '0');
+                const seconds = date.getSeconds().toString().padStart(2, '0');
                 return `${hours}:${minutes}:${seconds}`;
-            });            
+            });          
             const horizontalAccuracyData = data.accuracy_data.map(item => item.horizontal_accuracy);
             const verticalAccuracyData = data.accuracy_data.map(item => item.vertical_accuracy);
             const speedAccuracyData = data.accuracy_data.map(item => item.speed_accuracy);
-
-            console.log(labels);
-            console.log(horizontalAccuracyData);
-            console.log(verticalAccuracyData);
-            console.log(speedAccuracyData);
 
             // graph config
             const dataset = [

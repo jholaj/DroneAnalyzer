@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 import csv
 import io
 import json
-from datetime import datetime
+from datetime import datetime, time, timedelta
 ##################################
 ##### AUTHOR: JAROSLAV HOLAJ #####
 #####   TIME SPENT: 17h 00m  #####
@@ -100,12 +100,40 @@ def homepage_view(request):
                 'charging': entry['charging']
             } for entry in status_data]
 
+            charging_changes_data = []
+            start_time = datetime.strptime(battery_data[0]['time'].split('+')[0], '%Y-%m-%d %H:%M:%S')
+            for i in range(1, len(battery_data)):
+                if battery_data[i]['charging'] != battery_data[i - 1]['charging']:
+                    # end time => record where charging differs from the current series of TRUE/FALSE
+                    end_time = datetime.strptime(battery_data[i]['time'].split('+')[0], '%Y-%m-%d %H:%M:%S')
+                    duration_seconds = (end_time - start_time).total_seconds()
+                    print(duration_seconds)
+                    charging_changes_data.append({
+                        'start_time': start_time,
+                        'end_time': end_time,
+                        'duration': duration_seconds,
+                        'charging': battery_data[i - 1]['charging']
+                    })
+                    start_time = datetime.strptime(battery_data[i]['time'].split('+')[0], '%Y-%m-%d %H:%M:%S')
+                elif i == len(battery_data) - 1:
+                    end_time = datetime.strptime(battery_data[i]['time'].split('+')[0], '%Y-%m-%d %H:%M:%S')
+                    duration_seconds = (end_time - start_time).total_seconds()
+                    print(duration_seconds)
+                    charging_changes_data.append({
+                        'start_time': start_time,
+                        'end_time': end_time,
+                        'duration': duration_seconds,
+                        'charging': battery_data[i]['charging']
+                    })
+     
+            print(charging_changes_data)
             return JsonResponse(
                     {'longitude_latitude_data': longitude_latitude_data,
                      'accuracy_data':accuracy_data,
                      'signal_strength_data':signal_strength_data,
                      'basic_data':basic_data,
-                     'battery_data':battery_data})
+                     'battery_data':battery_data,
+                     'charging_changes_data': charging_changes_data})
         except Exception as e:
             return JsonResponse({'error': f"Error processing data: {str(e)}"}, status=500)
 

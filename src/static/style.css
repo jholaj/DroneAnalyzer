@@ -74,6 +74,24 @@ nav {
     background-color: #a5c9f9;
 }
 
+/* table on battery tab */
+#changes-table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ddd;
+    margin-bottom: 50px;
+  }
+  
+  #changes-table th, #changes-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  #changes-table th {
+    background-color: #f2f2f2;
+  }
+
 /* important for rewriting javascript */
 @media only screen and (max-width: 955px) {
     .end-label {
